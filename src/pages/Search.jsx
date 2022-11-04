@@ -29,7 +29,7 @@ class Search extends Component {
     const { userName, isButtonDisable } = this.state;
     const MIN_CHARACTERS = 2;
     return (
-      <div data-testid="page-login">
+      <div data-testid="page-search">
         <Header />
         <form>
           <input
