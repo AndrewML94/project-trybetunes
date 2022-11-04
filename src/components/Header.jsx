@@ -24,10 +24,10 @@ class Header extends Component {
       <header data-testid="header-component">
         <span data-testid="header-user-name">{ loading ? <Loading /> : userName }</span>
         <h1>TrybeTunes</h1>
-        <Link to="/search">Search</Link>
+        <Link data-testid="link-to-search" to="/search">Search</Link>
         <Link to="/album/:id">Album</Link>
-        <Link to="/favorites">Favorites</Link>
-        <Link to="/profile">Profile</Link>
+        <Link data-testid="link-to-favorites" to="/favorites">Favorites</Link>
+        <Link data-testid="link-to-profile" to="/profile">Profile</Link>
         <Link to="/profile/edit">Profile Edit</Link>
       </header>
     );
