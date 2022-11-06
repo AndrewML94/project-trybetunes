@@ -1,14 +1,39 @@
 import React, { Component } from 'react';
 import Props from 'prop-types';
+import Loading from '../components/Loading';
+import { addSong, removeSong } from '../services/favoriteSongsAPI';
 
 class MusicCard extends Component {
+  state = {
+    check: false,
+    isLoading: false,
+  };
+
+  handleChange = async ({ target }) => {
+    const { checked } = target;
+    this.setState({
+      check: checked,
+    });
+    this.setState({ isLoading: true });
+    if (checked) {
+      await addSong(this.props);
+    } else {
+      await removeSong(this.props);
+    }
+    this.setState({ isLoading: false });
+  };
+
   render() {
     const {
       trackName,
       previewUrl,
       trackId,
-      checked,
-      handleChange } = this.props;
+      favoriteMusics } = this.props;
+    const {
+      check,
+      isLoading,
+    } = this.state;
+
     return (
       <div>
         <span>{trackName}</span>
@@ -19,18 +44,19 @@ class MusicCard extends Component {
           <code>audio</code>
           .
         </audio>
-        <form>
-          <label htmlFor={ trackId }>
-            <input
-              data-testid={ `checkbox-music-${trackId}` }
-              type="checkbox"
-              id={ trackId }
-              checked={ checked }
-              onChange={ handleChange }
-            />
-            Favorita
-          </label>
-        </form>
+        { isLoading ? <Loading /> : (
+          <form>
+            <label htmlFor={ trackId }>
+              <input
+                data-testid={ `checkbox-music-${trackId}` }
+                type="checkbox"
+                id={ trackId }
+                checked={ check || favoriteMusics }
+                onChange={ this.handleChange }
+              />
+              Favorita
+            </label>
+          </form>)}
       </div>
     );
   }
@@ -40,8 +66,7 @@ MusicCard.propTypes = {
   trackName: Props.string.isRequired,
   previewUrl: Props.string.isRequired,
   trackId: Props.number.isRequired,
-  checked: Props.bool.isRequired,
-  handleChange: Props.func.isRequired,
+  favoriteMusics: Props.shape.isRequired,
 };
 
 export default MusicCard;
