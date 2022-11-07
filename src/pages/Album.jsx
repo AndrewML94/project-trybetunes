@@ -27,6 +27,13 @@ class Album extends Component {
     });
   }
 
+  async componentDidUpdate() {
+    const favoriteSongs = await getFavoriteSongs();
+    this.setState({
+      favoriteSongs,
+    });
+  }
+
   render() {
     const {
       musics,
@@ -41,8 +48,8 @@ class Album extends Component {
         <span data-testid="album-name">{ collectionName }</span>
         <span data-testid="artist-name">{ artistName }</span>
         { musics.map((music) => {
-          const favoriteMusics = favoriteSongs
-            .find((element) => element.trackId === music.trackId);
+          const favoriteMusics = favoriteSongs.find((element) => (
+            element.trackId === music.trackId));
           return (<MusicCard
             favoriteMusics={ favoriteMusics }
             trackId={ music.trackId }
