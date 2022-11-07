@@ -18,7 +18,6 @@ class Favorites extends Component {
 
   render() {
     const { favoriteSongs, isLoading } = this.state;
-    console.log(favoriteSongs);
     return (
       <div data-testid="page-favorites">
         <Header />
